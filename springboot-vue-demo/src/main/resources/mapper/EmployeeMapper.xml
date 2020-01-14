@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caix.dao.EmployeeDao">
+
+    <cache/>
+
+    <insert id="addEmployee" parameterType="Employee">
+        INSERT INTO t_employee (
+          e_name,
+          e_password,
+          e_gender,
+          e_dob,
+          e_phone,
+          e_email,
+          e_department,
+          e_role
+        )
+        VALUES
+          (
+            #{name},
+            #{password},
+            #{gender},
+            #{dob},
+            #{phone},
+            #{email},
+            #{department.id},
+            #{role.id}
+          )
+    </insert>
+
+    <delete id="deleteEmployee" parameterType="_int">
+        DELETE
+        FROM
+          t_employee
+        WHERE e_id = #{id}
+    </delete>
+
+    <update id="updateEmployee" parameterType="Employee">
+        UPDATE
+          t_employee
+        SET
+          e_name = #{name},
+          e_password =  #{password},
+          e_gender = #{gender},
+          e_dob =   #{dob},
+          e_phone =  #{phone},
+          e_email = #{email},
+          e_department = #{department.id},
+          e_role = #{role.id}
+        WHERE e_phone =  #{phone}
+    </update>
+
+    <resultMap id="employeeMap" type="Employee">
+        <id property="id" column="e_id"></id>
+        <result property="name" column="e_name"></result>
+        <result property="password" column="e_password"></result>
+        <result property="gender" column="e_gender"></result>
+        <result property="dob" column="e_dob"></result>
+        <result property="phone" column="e_phone"></result>
+        <result property="email" column="e_email"></result>
+        <association property="department" javaType="Department">
+            <id property="id" column="d_id"></id>
+            <result property="name" column="d_name"></result>
+            <result property="loc" column="d_loc"></result>
+        </association>
+        <association property="role" javaType="Role">
+            <id property="id" column="r_id"></id>
+            <result property="name" column="r_name"></result>
+            <collection property="permissionList" ofType="Permission">
+                <id property="id" column="p_id"></id>
+                <result property="name" column="p_name"></result>
+                <result property="url" column="p_url"></result>
+            </collection>
+        </association>
+    </resultMap>
+
+    <select id="getEmployeeById" parameterType="_int" resultMap="employeeMap">
+          SELECT
+          e_id,
+          e_name,
+          e_gender,
+          e_dob,
+          e_phone,
+          e_email,
+          r_name,
+          d_name
+        FROM
+          t_employee E
+          LEFT JOIN t_role R ON E.e_role = R.r_id
+          LEFT JOIN t_department D ON E.e_department = D.d_id
+        WHERE e_id = #{id}
+    </select>
+
+    <select id="getEmployees" resultMap="employeeMap" >
+     SELECT
+      e_id,
+      e_name,
+      e_gender,
+      e_dob,
+      e_phone,
+      e_email,
+      r_name,
+      d_name
+    FROM
+      t_employee E
+      LEFT JOIN t_role R ON E.e_role = R.r_id
+      LEFT JOIN t_department D ON E.e_department = D.d_id
+        Order by e_id
+    </select>
+
+    <select id="getEmployeeByPhone" resultMap="employeeMap" parameterType="String">
+    SELECT
+      e_id,
+      e_name,
+      e_gender,
+      e_dob,
+      e_phone,
+      e_email
+    FROM
+      t_employee
+    WHERE e_phone = #{phone}
+    </select>
+
+    <select id="getEmployeeByName" resultMap="employeeMap" parameterType="String">
+    SELECT
+      e_id,
+      e_name,
+      e_gender,
+      e_dob,
+      e_phone,
+      e_email
+    FROM
+      t_employee
+    WHERE e_name = #{name}
+    </select>
+
+</mapper>

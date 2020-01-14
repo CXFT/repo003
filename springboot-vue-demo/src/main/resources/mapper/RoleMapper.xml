@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caix.dao.RoleDao">
+
+    <insert id="addRole" parameterType="Role">
+        INSERT INTO t_role ( r_name)
+        VALUES
+          ( #{name});
+    </insert>
+
+    <delete id="deleteRole" parameterType="_int">
+        DELETE
+        FROM
+          t_role
+        WHERE r_id = #{id}
+    </delete>
+
+    <update id="updateRole" parameterType="Role">
+        UPDATE
+          t_role
+        SET
+          r_name = #{name}
+        WHERE r_id = #{id}
+    </update>
+
+
+    <resultMap id="roleMap" type="Role">
+        <id property="id" column="r_id"></id>
+        <result property="name" column="r_name"></result>
+        <collection property="permissionList" ofType="Permission">
+            <id property="id" column="p_id"></id>
+            <result property="name" column="p_name"></result>
+            <result property="url" column="p_url"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getRoleById" parameterType="_int" resultMap="roleMap">
+        SELECT
+          r_id,
+          r_name
+        FROM
+          t_role
+         WHERE r_id = #{id}
+    </select>
+
+    <select id="getRoleByName" parameterType="String" resultMap="roleMap">
+        SELECT
+          r_id,
+          r_name
+        FROM
+          t_role
+         WHERE r_name = #{name}
+    </select>
+
+    <select id="getRoles" resultMap="roleMap">
+        SELECT
+          r_id,
+          r_name
+        FROM
+          t_role
+        Order by r_id
+    </select>
+
+</mapper>

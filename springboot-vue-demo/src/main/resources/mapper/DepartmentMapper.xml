@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caix.dao.DepartmentDao">
+
+    <insert id="addDepartment" parameterType="Department">
+        INSERT INTO t_department ( d_name, d_loc)
+        VALUES
+          ( #{name}, #{loc});
+    </insert>
+
+    <delete id="deleteDepartment" parameterType="_int">
+        DELETE
+        FROM
+          t_Department
+        WHERE d_id = #{id}
+    </delete>
+
+    <update id="updateDepartment" parameterType="Department">
+       UPDATE
+          t_department
+        SET
+          d_name = #{name},
+          d_loc = #{loc}
+        WHERE d_id = #{id}
+    </update>
+
+
+    <resultMap id="DepartmentMap" type="Department">
+        <id property="id" column="d_id"></id>
+        <result property="name" column="d_name"></result>
+        <result property="loc" column="d_loc"></result>
+    </resultMap>
+
+    <select id="getDepartmentById" parameterType="_int"  resultMap="DepartmentMap">
+       SELECT
+          d_id,
+          d_name,
+          d_loc
+        FROM
+          t_department
+        WHERE d_id = #{id}
+    </select>
+
+    <select id="getDepartmentByName" parameterType="String"  resultMap="DepartmentMap">
+       SELECT
+          d_id,
+          d_name,
+          d_loc
+        FROM
+          t_department
+        WHERE d_name = #{name}
+    </select>
+
+    <select id="getDepartments" resultMap="DepartmentMap">
+          SELECT
+          d_id,
+          d_name,
+          d_loc
+        FROM
+          t_department
+        order by d_id
+    </select>
+
+</mapper>

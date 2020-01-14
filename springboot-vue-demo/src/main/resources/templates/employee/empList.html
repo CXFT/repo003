@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" >
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/common.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="allBox">
+    <div class="top">
+
+    </div>
+    <div class="middle">
+        <div class="middle_nav">
+
+        </div>
+        <div class="middle_context">
+            <div class="middle_context_data">
+                <form id="date-import-form" action="/Employee/import" enctype="multipart/form-data" method="post">
+                    <input  type="file" name="filename"/>
+                    <input  type="submit" value="导入数据">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="button" onclick="window.location.href='/Employee/export'" value="导出数据" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </form>
+            </div>
+            <span th:text="${msg } "></span>
+            <form action="deleteEmployee">
+                <table class="empTable">
+                    <tr>
+                        <td th:colspan="15" >
+                            <input type="submit" value="批量删除">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="10px"></th>
+                        <th>编号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>生日</th>
+                        <th>电话</th>
+                        <th>邮箱</th>
+                        <th>担任职位</th>
+                        <th>所在部门</th>
+                        <th>相关操作</th>
+                    </tr>
+                    <tr th:each="employee:${employees}">
+                        <td  ><input name="empIds" type="checkbox" th:value="${employee?.getId()}"></td>
+                        <td th:text="${employee.getId()}"></td>
+                        <td th:text="${employee.getName()}"></td>
+                        <td th:text="${employee.getGender()}==0?'女':'男'"></td>
+                        <td th:text="${#dates.format(employee.getDob(),'yyyy-MM-dd')}"></td>
+                        <td th:text="${employee.getPhone()}"></td>
+                        <td th:text="${employee.getEmail()}"></td>
+                        <td th:text="${employee.getRole().getName()}"></td>
+                        <td th:text="${employee.getDepartment().getName()}"></td>
+                        <td>
+                            <a th:href="@{deleteEmployee(empIds=${employee.getId()} )}">
+                                <input type="button" value="删除"></a>&nbsp;&nbsp;
+                            <a th:href="@{updateEmployee(id=${employee.getId()} )}">
+                                <input type="button" value="修改"></a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+         </div>
+    </div>
+    <div class="bottom">
+
+    </div>
+</div>
+
+</body>
+</html>

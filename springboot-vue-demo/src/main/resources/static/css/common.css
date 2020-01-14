@@ -1,0 +1,93 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.allBox{
+    width: 98%;
+    height: 100%;
+    border: 1px solid black;
+    margin: auto;
+}
+.top{
+    width: 100%;
+    height: 70px;
+    border: 1px solid black;
+}
+.middle{
+    width: 100%;
+    height: 500px;
+    border: 1px solid black;
+}
+.middle_nav{
+    width: 20%;
+    height: 500px;
+    border: 1px solid black;
+    float: left;
+}
+.middle_context{
+    width: 79%;
+    height: 500px;
+    border: 1px solid black;
+    float: left;
+
+}
+.middle_context_data
+{
+    width: 100%;
+    height:80px;
+    border: 1px solid black;
+    float: left;
+}
+#date-import-form{
+    width: 100%;
+    height:40px;
+    float: left;
+    margin-top: 20px;
+}
+.empTable{
+    width:900px;
+    border: 1px solid brown;
+    margin: 50px auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+.empTable tr{
+    height: 40px;
+}
+.empTable tr th{
+    border: 1px solid brown;
+}
+.empTable tr td{
+    border: 1px solid brown;
+}
+.bottom{
+    width: 100%;
+    height: 80px;
+    border: 1px solid black;
+}
+/*
+  部门CSS
+*/
+.depTable{
+    width: 600px;
+    border: 1px solid black;
+    margin: 10px auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+.depTable tr th{
+    border: 1px solid black;
+    height: 40px;
+}
+.depTable tr td{
+    border: 1px solid black;
+    height: 40px;
+}
+.dep_data{
+    height: 50px;
+    width: 100%;
+    border: 1px solid black;
+    margin-top: 50px;
+}
+
